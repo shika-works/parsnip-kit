@@ -1,0 +1,15 @@
+coverage/
+node_modules/
+script/
+wiki/
+docs/
+dts-bundle-generator.config.json
+eslint.config.js
+tsconfig.json
+vite.config.ts
+
+.husky/
+.github/
+
+packages/**/*.test.ts
+packages/**/*.test.js

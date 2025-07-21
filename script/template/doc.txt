@@ -1,0 +1,32 @@
+# [[[function]]]
+[[[desc [[[function]]]
+  
+]]]
+[[[version [[[function]]]
+  
+]]]
+
+### Usage
+
+[[[demo]]]
+
+
+### API
+
+#### Type Parameter
+
+[[[template [[[function]]]
+
+]]]
+
+#### Arguments
+
+[[[params [[[function]]]
+
+]]]
+
+#### Returns
+
+[[[returns [[[function]]]
+
+]]]

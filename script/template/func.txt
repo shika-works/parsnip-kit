@@ -1,0 +1,13 @@
+/**
+ * Function description
+ * @template {} T The type parameters
+ * @param {} arg The parameters
+ * @returns {}
+ * @version version
+ */
+
+export function [[[function]]]<T>(
+  arg
+) {
+  // Function Template
+}

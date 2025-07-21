@@ -1,0 +1,6 @@
+[[[demo
+```ts
+import { [[[function]]] } from 'parsnip-kit'
+// Usage
+```
+]]]
