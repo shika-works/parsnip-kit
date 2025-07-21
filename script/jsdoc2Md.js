@@ -100,7 +100,7 @@ function generateMD(func) {
   const demoReg = new RegExp(`\\[\\[\\[demo([\\d\\D]*?)\\]\\]\\]`, 'g')
   templateFile = transitDemo(templateFile, demoReg, (validItemArr) => {
     const demoContent = fs.readFileSync(
-      path.replace('\\doc\\', '\\demo\\'),
+      path.replace('/doc/', '/demo/'),
       'utf-8'
     )
     const match = demoContent.match(

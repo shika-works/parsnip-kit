@@ -124,14 +124,14 @@ function generateMD(lang, testReport) {
           lang,
           needContent: fullPath.includes('/common/'),
           template,
-          path: fullTemplatePath.replace(/\//g, '\\')
+          path: fullTemplatePath.replace(/\\/g, '/')
         })
 
         if (!output) {
           return
         }
 
-        const path = fullPath.replace(/\//g, '\\')
+        const path = fullPath.replace(/\\/g, '/')
         const fileData = testReport.coverageMap[path]
 
         if (fileData && !fullPath.includes('/common/')) {
