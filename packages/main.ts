@@ -32,6 +32,7 @@ export { isNanValue } from './typed/isNanValue'
 export { isInt } from './typed/isInt'
 export { isFloat } from './typed/isFloat'
 export { getTypeTag } from './typed/getTypeTag'
+export { isNullish } from './typed/isNullish'
 
 export { getByPath } from './object/getByPath'
 export { setByPath } from './object/setByPath'
@@ -48,6 +49,7 @@ export { isEqualStrict } from './object/isEqualStrict'
 export { unzipToArrays } from './object/unzipToArrays'
 export { objectToPairs } from './object/objectToPairs'
 export { splitToArrays } from './object/splitToArrays'
+export { mergeSkipNullish } from './object/mergeSkipNullish'
 
 export { difference } from './array/difference'
 export { intersection } from './array/intersection'
@@ -105,6 +107,8 @@ export { concurrent } from './async/concurrent'
 export { sequential } from './async/sequential'
 export { retry } from './async/retry'
 export type { RetryOptions } from './async/retry'
+export { poll } from './async/poll'
+export type { PollOptions, PollResult } from './async/poll'
 
 export type {
   PrimitiveType,
@@ -123,7 +127,9 @@ export type {
   MappedTypeByKeyOrIndex,
   DeepMappedTypeByKeyOrIndex,
   DataUnit,
-  PseudoArray
+  PseudoArray,
+  Nullish,
+  SpreadSkipNullish
 } from './common/types'
 
 export {

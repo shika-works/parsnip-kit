@@ -296,3 +296,45 @@
 [[[source DataUnit
   
 ]]]
+
+# Nullish
+[[[desc Nullish
+]]]
+[[[desc Nullish zh
+`Nullish` 类型表示值为 `null` 或 `undefined` 的类型。
+]]]
+[[[desc Nullish ja
+`Nullish` 型は、値が `null` または `undefined` の場合を表します。
+]]]
+
+[[[version Nullish
+  
+]]]
+
+### Source
+[[[source Nullish
+  
+]]]
+
+# SpreadSkipNullish
+[[[desc SpreadSkipNullish
+]]]
+[[[desc SpreadSkipNullish zh
+  从左到右合并多个类型，形成一个新的对象类型。
+
+  前面对象中非 `null` 或 `undefined` 的字段不会被后面的 `null` 或 `undefined` 的字段覆盖。
+]]]
+[[[desc SpreadSkipNullish ja
+  左から右に複数の型をマージして新しいオブジェクトの型を形成します。
+
+  先のオブジェクトの `null` または `undefined` でないフィールドは、後のオブジェクトの `null` または `undefined` のフィールドによって上書きされません。
+]]]
+
+[[[version SpreadSkipNullish
+  
+]]]
+
+### Source
+[[[source SpreadSkipNullish
+  
+]]]
