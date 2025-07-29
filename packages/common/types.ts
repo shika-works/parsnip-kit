@@ -180,3 +180,29 @@ export type DataUnit =
   | 'EB'
   | 'ZB'
   | 'YB'
+
+/**
+ * `Nullish` type represents values that are either `null` or `undefined`.
+ * @version 0.0.4
+ */
+export type Nullish = undefined | null
+
+/**
+ * Merge multiple types from left to right to form a new object type.
+ *
+ * Fields that are not `null` or `undefined` in the preceding objects will not be overwritten by `null` or `undefined` fields from the subsequent objects.
+ * @version 0.0.4
+ */
+export type SpreadSkipNullish<T, U> = {
+  [K in keyof T | keyof U]: K extends keyof T
+    ? K extends keyof U
+      ? T[K] extends Nullish
+        ? U[K]
+        : U[K] extends Nullish
+          ? T[K]
+          : U[K]
+      : T[K]
+    : K extends keyof U
+      ? U[K]
+      : never
+}
