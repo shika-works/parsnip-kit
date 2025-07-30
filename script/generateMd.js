@@ -131,10 +131,13 @@ function generateMD(lang, testReport) {
           return
         }
 
-        const path = fullPath.replace(/\\/g, '/')
-        const fileData = testReport.coverageMap[path]
+        const linuxPath = fullPath.replace(/\\/g, '/')
+        const windowsPath = fullPath.replace(/\//g, '\\')
+        const fileData =
+          testReport.coverageMap[linuxPath] ||
+          testReport.coverageMap[windowsPath]
 
-        if (fileData && !fullPath.includes('/common/')) {
+        if (fileData && !linuxPath.includes('/packages/common/')) {
           output = insertCoverage(output, fileData)
         }
         const idx = output.indexOf('\n')
