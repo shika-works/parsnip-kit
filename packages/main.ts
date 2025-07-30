@@ -99,6 +99,7 @@ export { memoize } from './function/memoize'
 export { throttle } from './function/throttle'
 export { once } from './function/once'
 export { withFallback } from './function/withFallback'
+export { go } from './function/go'
 
 export { asyncForEach } from './async/asyncForEach'
 export { asyncForEachFields } from './async/asyncForEachFields'
