@@ -50,6 +50,7 @@ export { unzipToArrays } from './object/unzipToArrays'
 export { objectToPairs } from './object/objectToPairs'
 export { splitToArrays } from './object/splitToArrays'
 export { mergeSkipNullish } from './object/mergeSkipNullish'
+export { flattenObject } from './object/flattenObject'
 
 export { difference } from './array/difference'
 export { intersection } from './array/intersection'
@@ -130,7 +131,15 @@ export type {
   DataUnit,
   PseudoArray,
   Nullish,
-  SpreadSkipNullish
+  SpreadSkipNullish,
+  IsAny,
+  ArrayIndexes,
+  FieldPathComponent,
+  FlattenArrayObject,
+  FlattenObject,
+  UnionToIntersection,
+  IntersectionToObject,
+  FlattenNestObject
 } from './common/types'
 
 export {

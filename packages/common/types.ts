@@ -206,3 +206,102 @@ export type SpreadSkipNullish<T, U> = {
       ? U[K]
       : never
 }
+/**
+ * `IsAny` type is used to determine if a type is `any`.
+ * If `T` is `any`, the result is `true`; otherwise, it is `false`.
+ * @version 0.0.4
+ */
+export type IsAny<T> = 0 extends 1 & T ? true : false
+/**
+ * `ArrayIndexes` type is used to obtain the indexes of elements in an array (excluding general array properties such as `length`).
+ * @version 0.0.4
+ */
+export type ArrayIndexes<T extends any[]> = Exclude<
+  keyof T,
+  keyof any[] | 'length'
+> &
+  (string | number)
+/**
+ * `FieldPathComponent` type is used to generate field path components.
+ * If `Str` is a number or a numeric string, it generates a path like `'[1]'`; if it is a string, it generates a path like `'a'`.
+ * Depending on whether the subsequent type is a plain object or an array, it decides whether to append `'.'` at the end.
+ * @version 0.0.4
+ */
+export type FieldPathComponent<
+  Str extends string | number,
+  Next extends 'object' | 'array' | void = void
+> = Str extends NumberString | number
+  ? Next extends 'object'
+    ? `[${Str & (string | number)}].`
+    : `[${Str & (string | number)}]`
+  : Next extends 'object'
+    ? `${Str & string}.`
+    : `${Str & string}`
+/**
+ * `FlattenArrayObject` type is used to flatten objects within an array into a union type.
+ * It recursively processes each element in the array and continues to flatten based on the type of the element (object or array).
+ * @version 0.0.4
+ */
+export type FlattenArrayObject<
+  T extends Array<any>,
+  Prefix extends string = ''
+> = {
+  [K in number | ArrayIndexes<T>]: IsAny<T[K]> extends true
+    ? { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
+    : T[K] extends never
+      ? never
+      : T[K] extends object
+        ? T[K] extends Array<any>
+          ? FlattenArrayObject<
+              T[K],
+              `${Prefix}${FieldPathComponent<K, 'array'>}`
+            >
+          : FlattenObject<T[K], `${Prefix}${FieldPathComponent<K, 'object'>}`>
+        : { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
+}[ArrayIndexes<T> | number]
+/**
+ * `FlattenObject` type is used to flatten an object into a union type.
+ * It recursively processes each field of the object and continues to flatten based on the type of the field (object or array).
+ * @version 0.0.4
+ */
+export type FlattenObject<T, Prefix extends string = ''> = {
+  [K in keyof T & string]: IsAny<T[K]> extends true
+    ? { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
+    : T[K] extends never
+      ? never
+      : T[K] extends object
+        ? T[K] extends Array<any>
+          ? FlattenArrayObject<
+              T[K],
+              `${Prefix}${FieldPathComponent<K, 'array'>}`
+            >
+          : FlattenObject<T[K], `${Prefix}${FieldPathComponent<K, 'object'>}`>
+        : { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
+}[keyof T & string]
+/**
+ * `UnionToIntersection` type is used to convert a union type to an intersection type.
+ * For example, `A | B` will be converted to `A & B`.
+ * @version 0.0.4
+ */
+export type UnionToIntersection<U> = (
+  U extends any ? (x: U) => any : never
+) extends (x: infer R) => any
+  ? R
+  : never
+/**
+ * `IntersectionToObject` type is used to convert an intersection type to an object type.
+ * For example, `A & B` will be converted to `{ [K in keyof (A & B)]: (A & B)[K] }`.
+ * @version 0.0.4
+ */
+export type IntersectionToObject<U> = {
+  [K in keyof UnionToIntersection<U>]: UnionToIntersection<U>[K]
+}
+/**
+ * `FlattenNestObject` type is used to flatten a nested object into a new object type.
+ * It first flattens the object into a union type using `FlattenObject`, then converts the union type to an intersection type using `UnionToIntersection`,
+ * and finally converts the intersection type to an object type using `IntersectionToObject`.
+ * @version 0.0.4
+ */
+export type FlattenNestObject<T extends object> = IntersectionToObject<
+  UnionToIntersection<FlattenObject<T>>
+>
