@@ -131,6 +131,7 @@ export type {
   PseudoArray,
   Nullish,
   SpreadSkipNullish,
+  IsAny,
   ArrayIndexes,
   FieldPathComponent,
   FlattenArrayObject,
