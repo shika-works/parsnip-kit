@@ -90,8 +90,8 @@ describe('poll function', () => {
     })
     const mockOptions = genMockOptions()
     mockOptions.sequential = true
-    const pollResult = poll(mockAsyncFunction, 10, mockOptions)()
-    await new Promise((resolve) => setTimeout(resolve, 250))
+    const pollResult = poll(mockAsyncFunction, 100, mockOptions)()
+    await new Promise((resolve) => setTimeout(resolve, 500))
     expect(mockAsyncFunction).toHaveBeenCalledTimes(3)
     mockOptions.sequential = false
     pollResult.stop()
@@ -149,7 +149,7 @@ describe('poll function', () => {
     const mockOptions = genMockOptions()
 
     expect(mockAsyncFunction).toHaveBeenCalledTimes(0)
-    const pollResult = poll(mockAsyncFunction, 15, mockOptions)()
+    const pollResult = poll(mockAsyncFunction, 100, mockOptions)()
     await new Promise((resolve) => setTimeout(resolve, 10))
     expect(pollResult.isRunning()).toBe(true)
     pollResult.start()
