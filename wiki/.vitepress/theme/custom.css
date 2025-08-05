@@ -20,10 +20,30 @@ img[alt="Static Badge"] {
     position: fixed;
     right: 24px;
     z-index: 114514;
+    height: 73vh;
+    overflow: auto;
     font-size: 14px;
   }
 }
 .table-of-contents ul {
   list-style-type: none;
   padding-left: 14px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.03);
+  background-color: rgba(0,0,0,.1);
 }

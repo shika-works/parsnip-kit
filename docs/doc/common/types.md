@@ -296,3 +296,171 @@
 [[[source DataUnit
   
 ]]]
+
+# Nullish
+[[[desc Nullish
+]]]
+[[[desc Nullish zh
+`Nullish` 类型表示值为 `null` 或 `undefined` 的类型。
+]]]
+[[[desc Nullish ja
+`Nullish` 型は、値が `null` または `undefined` の場合を表します。
+]]]
+
+[[[version Nullish
+  
+]]]
+
+### Source
+[[[source Nullish
+  
+]]]
+
+# SpreadSkipNullish
+[[[desc SpreadSkipNullish
+]]]
+[[[desc SpreadSkipNullish zh
+  从左到右合并多个类型，形成一个新的对象类型。
+
+  前面对象中非 `null` 或 `undefined` 的字段不会被后面的 `null` 或 `undefined` 的字段覆盖。
+]]]
+[[[desc SpreadSkipNullish ja
+  左から右に複数の型をマージして新しいオブジェクトの型を形成します。
+
+  先のオブジェクトの `null` または `undefined` でないフィールドは、後のオブジェクトの `null` または `undefined` のフィールドによって上書きされません。
+]]]
+
+[[[version SpreadSkipNullish
+  
+]]]
+
+### Source
+[[[source SpreadSkipNullish
+  
+]]]
+
+# IsAny
+[[[desc IsAny
+]]]
+[[[desc IsAny zh
+`IsAny` 类型用于判断一个类型是否为 `any`。
+如果 `T` 是 `any`，则结果为 `true`，否则为 `false`。
+]]]
+[[[desc IsAny ja
+`IsAny` 型は、型が `any` かどうかを判断するために使用されます。
+`T` が `any` の場合、結果は `true` となり、そうでない場合は `false` となります。
+]]]
+[[[version IsAny
+]]]
+### Source
+[[[source IsAny
+]]]
+
+# ArrayIndexes
+[[[desc ArrayIndexes
+]]]
+[[[desc ArrayIndexes zh
+`ArrayIndexes` 类型用于获取数组中元素的索引（不包括数组的通用属性，如 `length`）。
+]]]
+[[[desc ArrayIndexes ja
+`ArrayIndexes` 型は、配列の要素のインデックスを取得するために使用されます（配列の一般的なプロパティ、例えば `length` は除きます）。
+]]]
+[[[version ArrayIndexes
+]]]
+### Source
+[[[source ArrayIndexes
+]]]
+
+# FieldPathComponent
+[[[desc FieldPathComponent
+]]]
+[[[desc FieldPathComponent zh
+`FieldPathComponent` 类型用于生成字段路径组件。
+如果 `Str` 是数字或数字字符串，生成如 `'[1]'` 的路径；如果是字符串，生成如 `'a'` 的路径。
+根据后续是普通对象还是数组，决定是否添加 `'.'` 作为结尾。
+]]]
+[[[desc FieldPathComponent ja
+`FieldPathComponent` 型は、フィールドのパスコンポーネントを生成するために使用されます。
+`Str` が数字または数値文字列の場合、`'[1]'` のようなパスを生成し、文字列の場合には `'a'` のようなパスを生成します。
+次の型が普通のオブジェクトか配列かによって、最後に `'.'` を追加するかどうかが決まります。
+]]]
+[[[version FieldPathComponent
+]]]
+### Source
+[[[source FieldPathComponent
+]]]
+
+# FlattenArrayObject
+[[[desc FlattenArrayObject
+]]]
+[[[desc FlattenArrayObject zh
+`FlattenArrayObject` 类型用于将数组中的对象扁平化为联合类型。它会递归地处理数组中的每个元素，根据元素的类型（对象或数组）继续扁平化。
+]]]
+[[[desc FlattenArrayObject ja
+`FlattenArrayObject` 型は、配列内のオブジェクトを連合型にフラット化するために使用されます。これは、配列内の各要素を再帰的に処理し、要素の型（オブジェクトまたは配列）に応じてフラット化を続けます。
+]]]
+[[[version FlattenArrayObject
+]]]
+### Source
+[[[source FlattenArrayObject
+]]]
+
+# FlattenObject
+[[[desc FlattenObject
+]]]
+[[[desc FlattenObject zh
+`FlattenObject` 类型用于将对象扁平化为联合类型。它会递归地处理对象的每个字段，根据字段的类型（对象或数组）继续扁平化。
+]]]
+[[[desc FlattenObject ja
+`FlattenObject` 型は、オブジェクトを連合型にフラット化するために使用されます。これは、オブジェクトの各フィールドを再帰的に処理し、フィールドの型（オブジェクトまたは配列）に応じてフラット化を続けます。
+]]]
+[[[version FlattenObject
+]]]
+### Source
+[[[source FlattenObject
+]]]
+
+# UnionToIntersection
+[[[desc UnionToIntersection
+]]]
+[[[desc UnionToIntersection zh
+`UnionToIntersection` 类型用于将联合类型转换为交叉类型。例如，`A | B` 会被转换为 `A & B`。
+]]]
+[[[desc UnionToIntersection ja
+`UnionToIntersection` 型は、連合型を交叉型に変換するために使用されます。例えば、`A | B` は `A & B` に変換されます。
+]]]
+[[[version UnionToIntersection
+]]]
+### Source
+[[[source UnionToIntersection
+]]]
+
+# IntersectionToObject
+[[[desc IntersectionToObject
+]]]
+[[[desc IntersectionToObject zh
+`IntersectionToObject` 类型用于将交叉类型转换为对象类型。例如，`A & B` 会被转换为 `{ [K in keyof (A & B)]: (A & B)[K] }`。
+]]]
+[[[desc IntersectionToObject ja
+`IntersectionToObject` 型は、交叉型をオブジェクト型に変換するために使用されます。例えば、`A & B` は `{ [K in keyof (A & B)]: (A & B)[K] }` に変換されます。
+]]]
+[[[version IntersectionToObject
+]]]
+### Source
+[[[source IntersectionToObject
+]]]
+
+# FlattenNestObject
+[[[desc FlattenNestObject
+]]]
+[[[desc FlattenNestObject zh
+`FlattenNestObject` 类型用于将嵌套对象扁平化为新的对象类型。它通过 `FlattenObject` 将对象扁平化为联合类型，然后通过 `UnionToIntersection`将联合类型转换为交叉类型，最终通过 `IntersectionToObject` 将交叉类型转换为对象类型。
+]]]
+[[[desc FlattenNestObject ja
+`FlattenNestObject` 型は、ネストされたオブジェクトを新しいオブジェクト型にフラット化するために使用されます。まず、`FlattenObject` を使用してオブジェクトを連合型にフラット化し、次に `UnionToIntersection` を使用して連合型を交叉型に変換し、最後に `IntersectionToObject` を使用して交叉型をオブジェクト型に変換します。
+]]]
+[[[version FlattenNestObject
+]]]
+### Source
+[[[source FlattenNestObject
+]]]

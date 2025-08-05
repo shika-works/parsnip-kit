@@ -79,7 +79,7 @@ function generateMD(func) {
   } = func
 
   const descReg = new RegExp(
-    `\\[\\[\\[desc ${functionName}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[desc ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(
@@ -90,7 +90,7 @@ function generateMD(func) {
   )
 
   const versionReg = new RegExp(
-    `\\[\\[\\[version ${functionName}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[version ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(templateFile, versionReg, lang, () =>
@@ -100,7 +100,7 @@ function generateMD(func) {
   const demoReg = new RegExp(`\\[\\[\\[demo([\\d\\D]*?)\\]\\]\\]`, 'g')
   templateFile = transitDemo(templateFile, demoReg, (validItemArr) => {
     const demoContent = fs.readFileSync(
-      path.replace('\\doc\\', '\\demo\\'),
+      path.replace('/doc/', '/demo/'),
       'utf-8'
     )
     const match = demoContent.match(
@@ -112,7 +112,7 @@ function generateMD(func) {
   })
 
   const templateReg = new RegExp(
-    `\\[\\[\\[template ${functionName}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[template ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(
@@ -149,7 +149,7 @@ function generateMD(func) {
   )
 
   const paramsReg = new RegExp(
-    `\\[\\[\\[params ${functionName}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[params ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(
@@ -188,7 +188,7 @@ function generateMD(func) {
   )
 
   const returnsReg = new RegExp(
-    `\\[\\[\\[returns ${functionName}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[returns ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(templateFile, returnsReg, lang, () => {
@@ -198,7 +198,7 @@ function generateMD(func) {
   })
 
   const sourceReg = new RegExp(
-    `\\[\\[\\[source ${functionName}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[source ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(templateFile, sourceReg, lang, () => {

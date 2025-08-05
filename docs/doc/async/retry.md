@@ -28,6 +28,9 @@
 [[[template retry zh
 T:函数`func`返回的`Promise`的`value`类型
 ]]]
+[[[template poll ja
+T：関数`func`が返す`Promise`の`value`の型
+]]]
 
 #### Arguments
 
