@@ -9,7 +9,11 @@ describe('escapeRegExp', () => {
     const varSet = new Set<string>()
     const exports = Object.keys(files)
       .map(async (filename: string) => {
-        if (filename.includes('.test.ts') || filename === '../main.ts') {
+        if (
+          filename.includes('.test.ts') ||
+          filename === '../main.ts' ||
+          filename.includes('../__share__/')
+        ) {
           return
         }
         return files[filename]()

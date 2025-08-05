@@ -10,8 +10,16 @@ import { isBigInt } from '../isBigInt'
 import { isPrimitive } from '../isPrimitive'
 import { getTypeTag } from '../getTypeTag'
 import { isArray } from '../isArray'
+import { isNullish } from '../isNullish'
 
 describe('normal type', () => {
+  test('isNullish', () => {
+    expect(isNullish(null)).eq(true)
+    expect(isNullish({})).eq(false)
+    expect(isNullish(undefined)).eq(true)
+    expect(isNullish(NaN)).eq(false)
+    expect(isNullish(0)).eq(false)
+  })
   test('isString', () => {
     expect(isString('test')).eq(true)
     expect(isString(new String('test'))).eq(true)
