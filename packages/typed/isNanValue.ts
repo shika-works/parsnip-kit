@@ -6,7 +6,7 @@ import { isNumber } from './isNumber'
  * @returns {boolean}
  * @version 0.0.1
  */
-export function isNanValue(arg): arg is number {
+export function isNanValue(arg) {
   return (
     isNumber(arg) &&
     (typeof arg === 'number'
