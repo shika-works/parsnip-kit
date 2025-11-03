@@ -8,7 +8,7 @@ import { isNumber } from './isNumber'
  * @returns {boolean}
  * @version 0.0.1
  */
-export function isFloat(arg): arg is number {
+export function isFloat(arg) {
   return (
     isNumber(arg) &&
     !isInfinity(arg) &&

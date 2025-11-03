@@ -15,7 +15,7 @@ describe('number', () => {
 
     try {
       range(0, 1, 0)
-    } catch (error) {
+    } catch (error: any) {
       expect(error).instanceOf(TypeError)
       expect(error.message).eq('range step must be not equal 0.')
     }
@@ -25,7 +25,7 @@ describe('number', () => {
 
     try {
       percent(10, 0)
-    } catch (error) {
+    } catch (error: any) {
       expect(error).instanceOf(TypeError)
       expect(error.message).eq('Total cannot be zero.')
     }
