@@ -5,6 +5,7 @@ const excludeKeys = ['cloneNotCollectionObject']
 
 describe('escapeRegExp', () => {
   it('main.ts exports all functions', async () => {
+    // @ts-ignore
     const files = import.meta.glob('../**/*.ts')
     const varSet = new Set<string>()
     const exports = Object.keys(files)
@@ -20,7 +21,7 @@ describe('escapeRegExp', () => {
       })
       .filter(Boolean)
     const exportsRes = await Promise.all(exports)
-    exportsRes.forEach((exportEntry) => {
+    exportsRes.forEach((exportEntry: Record<string, any>) => {
       if (exportEntry) {
         Object.keys(exportEntry).forEach((key) => {
           if (!excludeKeys.includes(key)) {

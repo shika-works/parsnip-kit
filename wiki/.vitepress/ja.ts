@@ -4,7 +4,8 @@ import { dfs4Md } from './dfs4Md'
 const titleMap = {
   starting: 'クイックスタート',
   guide: '入門',
-  intro: 'はじめに'
+  intro: 'はじめに',
+  changelog: '変更履歴'
 }
 const additionMap = {
   string: '文字列',
@@ -16,7 +17,8 @@ const additionMap = {
   object: 'オブジェクト',
   random: 'ランダム',
   function: '関数',
-  async: '非同期'
+  async: '非同期',
+  validator: 'バリデーター'
 }
 
 const sidebar = dfs4Md('ja', titleMap, additionMap)
