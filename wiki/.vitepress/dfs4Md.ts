@@ -1,13 +1,15 @@
 import fs from 'fs'
 
+const newItems = ['isEmpty', 'isEmail', 'clamp', 'mapFields']
+
 const dfs = (
-  files,
+  files: any,
   prefix: string[],
   container: any[],
   titleMap: Record<string, string>,
   additionMap?: Record<string, string>
 ) => {
-  files.forEach((file) => {
+  files.forEach((file: string) => {
     if (file === '.vitepress' || file === 'index.md') {
       return
     }
@@ -15,7 +17,7 @@ const dfs = (
     if (fs.statSync(fullPath).isDirectory()) {
       const curFiles = fs.readdirSync(fullPath)
       prefix.push(file)
-      const curContainer = []
+      const curContainer: any[] = []
       const add = additionMap?.[file]
 
       container.push({
@@ -38,7 +40,11 @@ const dfs = (
       }
       const add = additionMap?.[fileName]
       container.push({
-        text: titleMap[fileName] || fileName + (add ? `  ${add}` : ''),
+        text:
+          (titleMap[fileName] || fileName + (add ? `  ${add}` : '')) +
+          (newItems.includes(fileName)
+            ? `<span class="VPBadge tip" style="color: rgb(0, 174, 236)">NEW!</span>`
+            : ''),
         link: '/' + prefix.slice(1).join('/') + `/${fileName}`,
         key: fileName
       })
@@ -55,12 +61,13 @@ const order = [
   'function',
   'async',
   'string',
+  'validator',
   'typed',
   'random',
   'common'
 ]
 
-const guideOrder = ['intro', 'starting']
+const guideOrder = ['intro', 'starting', 'changelog']
 
 export const dfs4Md = (
   lang: string,
