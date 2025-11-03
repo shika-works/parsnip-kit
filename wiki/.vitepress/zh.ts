@@ -4,7 +4,8 @@ import { dfs4Md } from './dfs4Md'
 const titleMap = {
   starting: '快速开始',
   guide: '开始',
-  intro: '简介'
+  intro: '简介',
+  changelog: '变更日志'
 }
 const additionMap = {
   string: '字符串',
@@ -16,7 +17,8 @@ const additionMap = {
   object: '对象',
   random: '随机',
   function: '函数',
-  async: '异步'
+  async: '异步',
+  validator: '校验'
 }
 
 const sidebar = dfs4Md('zh', titleMap, additionMap)

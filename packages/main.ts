@@ -33,6 +33,7 @@ export { isInt } from './typed/isInt'
 export { isFloat } from './typed/isFloat'
 export { getTypeTag } from './typed/getTypeTag'
 export { isNullish } from './typed/isNullish'
+export { isEmpty } from './typed/isEmpty'
 
 export { getByPath } from './object/getByPath'
 export { setByPath } from './object/setByPath'
@@ -51,6 +52,7 @@ export { objectToPairs } from './object/objectToPairs'
 export { splitToArrays } from './object/splitToArrays'
 export { mergeSkipNullish } from './object/mergeSkipNullish'
 export { flattenObject } from './object/flattenObject'
+export { mapFields } from './object/mapFields'
 
 export { difference } from './array/difference'
 export { intersection } from './array/intersection'
@@ -73,6 +75,7 @@ export { range } from './number/range'
 export { percent } from './number/percent'
 export { thousandSeparator } from './number/thousandSeparator'
 export { convertDataUnit } from './number/convertDataUnit'
+export { clamp } from './number/clamp'
 
 export { average } from './statistic/average'
 export { count } from './statistic/count'
@@ -111,6 +114,8 @@ export { retry } from './async/retry'
 export type { RetryOptions } from './async/retry'
 export { poll } from './async/poll'
 export type { PollOptions, PollResult } from './async/poll'
+
+export { isEmail } from './validator/isEmail'
 
 export type {
   PrimitiveType,
