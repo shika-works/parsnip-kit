@@ -50,6 +50,22 @@ describe('debounce', () => {
       expect(defaultFunc).toHaveBeenCalledTimes(1)
     })
 
+    it('immediate option', async () => {
+      const debounced = debounce(defaultFunc, 200, { immediate: true })
+
+      debounced()
+      vi.advanceTimersByTime(150)
+
+      expect(defaultFunc).toHaveBeenCalledTimes(1)
+
+      vi.advanceTimersByTime(60)
+
+      expect(defaultFunc).toHaveBeenCalledTimes(2)
+
+      debounced()
+      expect(defaultFunc).toHaveBeenCalledTimes(3)
+    })
+
     describe('maxWait option', () => {
       it('should trigger at maximum interval even if called frequently', async () => {
         const debounced = debounce(defaultFunc, 50, { maxWait: 150 })
