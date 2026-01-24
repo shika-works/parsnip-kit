@@ -45,6 +45,7 @@ export function debounce<T extends (...args: any[]) => any>(
       }
 
       func.apply(this, args)
+      timeout = undefined
     }, wait)
   }
 
