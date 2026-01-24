@@ -3,7 +3,8 @@ import { dfs4Md } from './dfs4Md'
 
 const titleMap = {
   starting: 'Quickly Starting',
-  intro: 'Introduction'
+  intro: 'Introduction',
+  changelog: 'Changelog'
 }
 const sidebar = dfs4Md('en', titleMap)
 
