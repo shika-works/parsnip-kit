@@ -94,6 +94,8 @@ export { randomNumber } from './random/randomNumber'
 export { randomString } from './random/randomString'
 export type { RandomStringOptions } from './random/randomString'
 export { randomInt } from './random/randomInt'
+export { shuffle } from './random/shuffle'
+export { shuffleInPlace } from './random/shuffleInPlace'
 
 export { combine } from './function/combine'
 export { curry } from './function/curry'
