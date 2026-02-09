@@ -1,4 +1,4 @@
-# shuffle
+# shuffleInPlace
 [[[desc shuffleInPlace
   
 ]]]

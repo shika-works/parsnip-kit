@@ -9,6 +9,19 @@
 ]]]
 
 [[[slice
+## v0.1.0
+Add functions shuffle and shuffleInPlace.
+]]]
+[[[slice zh
+## v0.1.0
+新增函数 shuffle、shuffleInPlace。
+]]]
+[[[slice ja
+## v0.1.0
+関数 shuffle、shuffleInPlace を追加しました。
+]]]
+
+[[[slice
 ## v0.0.6
 Add functions isEmpty, isEmail, clamp, mapFields.
 ]]]
