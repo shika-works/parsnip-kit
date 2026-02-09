@@ -1,7 +1,7 @@
 import * as prettierPluginOxc from '@prettier/plugin-oxc'
 
 export default {
-  printWidth: 96,
+  printWidth: 84,
   tabWidth: 2,
   useTabs: false,
   semi: false,
