@@ -43,6 +43,8 @@ describe('throttle', () => {
       })
 
       throttledFunc()
+      throttledFunc()
+      throttledFunc()
       expect(defaultFunc).toHaveBeenCalledTimes(1)
       vi.advanceTimersByTime(200)
       throttledFunc()
