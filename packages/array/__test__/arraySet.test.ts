@@ -16,11 +16,7 @@ describe('arraySet', () => {
 
     expect(
       JSON.stringify(
-        union(
-          [{ v: 1 }, { v: 2 }, { v: 3 }],
-          [{ v: 1 }, { v: 4 }, { v: 8 }],
-          'v'
-        )
+        union([{ v: 1 }, { v: 2 }, { v: 3 }], [{ v: 1 }, { v: 4 }, { v: 8 }], 'v')
       )
     ).eq('[{"v":1},{"v":2},{"v":3},{"v":4},{"v":8}]')
     expect(
@@ -52,9 +48,7 @@ describe('arraySet', () => {
     res.forEach((item, i) => {
       expect(Object.is(item, test0[i])).eq(true)
     })
-    expect(JSON.stringify(intersection([1, 1, 2, 3], [1, 1, 2, 3]))).eq(
-      '[1,2,3]'
-    )
+    expect(JSON.stringify(intersection([1, 1, 2, 3], [1, 1, 2, 3]))).eq('[1,2,3]')
     expect(
       JSON.stringify(
         intersection(
@@ -142,9 +136,7 @@ describe('arraySet', () => {
     res.forEach((item, i) => {
       expect(Object.is(item, test0[i])).eq(true)
     })
-    expect(JSON.stringify(symmetricDifference([1, 1, 2, 3], [1, 1, 2, 3]))).eq(
-      '[]'
-    )
+    expect(JSON.stringify(symmetricDifference([1, 1, 2, 3], [1, 1, 2, 3]))).eq('[]')
     expect(
       JSON.stringify(
         symmetricDifference(
@@ -189,23 +181,13 @@ describe('arraySet', () => {
     })
     expect(
       JSON.stringify(
-        unique(
-          [{ v: 1 }, { v: 2 }, { v: 3 }, { v: 1 }, { v: 4 }, { v: 8 }],
-          'v'
-        )
+        unique([{ v: 1 }, { v: 2 }, { v: 3 }, { v: 1 }, { v: 4 }, { v: 8 }], 'v')
       )
     ).eq('[{"v":1},{"v":2},{"v":3},{"v":4},{"v":8}]')
     expect(
       JSON.stringify(
         unique(
-          [
-            { v: [1] },
-            { v: [2] },
-            { v: [3] },
-            { v: [1] },
-            { v: [4] },
-            { v: [8] }
-          ],
+          [{ v: [1] }, { v: [2] }, { v: [3] }, { v: [1] }, { v: [4] }, { v: [8] }],
           'v[0]'
         )
       )

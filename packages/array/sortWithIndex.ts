@@ -15,10 +15,7 @@ import { sortIndex } from './sortIndex'
  * @version 0.0.2
  */
 
-export function sortWithIndex<T>(
-  arr: T[],
-  comparator?: (a: T, b: T) => number
-) {
+export function sortWithIndex<T>(arr: T[], comparator?: (a: T, b: T) => number) {
   const indices = sortIndex(arr, comparator)
   const sortedArray = indices.map((idx) => arr[idx])
   const len = arr.length

@@ -6,10 +6,7 @@ function mergeIntervals(intervals) {
   intervals.sort((a, b) => a[0] - b[0])
   const merged = []
   for (const interval of intervals) {
-    if (
-      merged[merged.length - 1] &&
-      merged[merged.length - 1][1] >= interval[0]
-    ) {
+    if (merged[merged.length - 1] && merged[merged.length - 1][1] >= interval[0]) {
       merged[merged.length - 1][1] = Math.max(
         merged[merged.length - 1][1],
         interval[1]
@@ -99,9 +96,7 @@ function generateMD(lang, testReport) {
         prefixPath.length ? '/' : ''
       }${file}`
 
-      const fullTemplatePath = `${templatePath}/${prefixPath.join(
-        '/'
-      )}/${fileName}.md`
+      const fullTemplatePath = `${templatePath}/${prefixPath.join('/')}/${fileName}.md`
 
       if (fs.statSync(fullPath).isDirectory()) {
         const nextFileNames = fs.readdirSync(fullPath)
@@ -134,8 +129,7 @@ function generateMD(lang, testReport) {
         const linuxPath = fullPath.replace(/\\/g, '/')
         const windowsPath = fullPath.replace(/\//g, '\\')
         const fileData =
-          testReport.coverageMap[linuxPath] ||
-          testReport.coverageMap[windowsPath]
+          testReport.coverageMap[linuxPath] || testReport.coverageMap[windowsPath]
 
         if (fileData && !linuxPath.includes('/packages/common/')) {
           output = insertCoverage(output, fileData)

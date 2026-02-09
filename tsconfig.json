@@ -21,7 +21,7 @@
 
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "dist",
+    "declarationDir": "dist"
   },
   "include": ["packages"],
   "exclude": ["node_modules", "dist", "packages/**/*.test.ts"]

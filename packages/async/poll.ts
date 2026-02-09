@@ -111,10 +111,7 @@ export function poll<T>(
     }
   }
 
-  return function (
-    this: unknown,
-    ...args: Parameters<typeof func>
-  ): PollResult {
+  return function (this: unknown, ...args: Parameters<typeof func>): PollResult {
     return executeWithPoll.apply(this, args)
   }
 }

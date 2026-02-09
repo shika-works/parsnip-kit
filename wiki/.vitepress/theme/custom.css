@@ -8,10 +8,18 @@
   --vp-button-brand-active-bg: rgb(233, 162, 75);
   --vp-c-brand-1: rgb(255, 140, 0);
   --vp-home-hero-image-filter: blur(80px);
-  --vp-home-hero-name-background: linear-gradient(120deg,  rgb(241, 169, 80) 40%, rgb(255, 140, 0));
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, rgb(255, 193, 118) 50%, rgb(255, 193, 118) 50%);
+  --vp-home-hero-name-background: linear-gradient(
+    120deg,
+    rgb(241, 169, 80) 40%,
+    rgb(255, 140, 0)
+  );
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    rgb(255, 193, 118) 50%,
+    rgb(255, 193, 118) 50%
+  );
 }
-img[alt="Static Badge"] {
+img[alt='Static Badge'] {
   display: inline-block;
 }
 
@@ -33,17 +41,17 @@ img[alt="Static Badge"] {
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.03);
-  background-color: rgba(0,0,0,.1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.03);
+  background-color: rgba(0, 0, 0, 0.1);
 }

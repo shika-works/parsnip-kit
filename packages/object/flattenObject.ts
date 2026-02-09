@@ -14,11 +14,7 @@ export function flattenObject<T extends object>(obj: T) {
   flattenHelper(obj, ans)
   return ans as FlattenNestObject<T>
 }
-function flattenHelper(
-  currentObj: any,
-  ans: any,
-  prefix: string | number = ''
-) {
+function flattenHelper(currentObj: any, ans: any, prefix: string | number = '') {
   const keys = Object.keys(currentObj)
   for (const key of keys) {
     const value = currentObj[key]

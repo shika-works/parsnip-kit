@@ -19,15 +19,9 @@ function safeCopySync(src, dest) {
 
 const rootDir = path.resolve(__dirname, '..')
 
-safeCopySync(
-  path.join(rootDir, 'README.md'),
-  path.join(rootDir, '__README_TEMP__')
-)
+safeCopySync(path.join(rootDir, 'README.md'), path.join(rootDir, '__README_TEMP__'))
 
-safeCopySync(
-  path.join(rootDir, 'README.npm.md'),
-  path.join(rootDir, 'README.md')
-)
+safeCopySync(path.join(rootDir, 'README.npm.md'), path.join(rootDir, 'README.md'))
 
 const files = fs.readdirSync(rootDir)
 files.forEach((file) => {

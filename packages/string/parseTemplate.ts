@@ -30,10 +30,7 @@ export function parseTemplate(
 ) {
   const { start = '{', end = '}' } = options
 
-  const pattern = new RegExp(
-    `${escapeRegExp(start)}(.*?)${escapeRegExp(end)}`,
-    'g'
-  )
+  const pattern = new RegExp(`${escapeRegExp(start)}(.*?)${escapeRegExp(end)}`, 'g')
 
   return template.replace(pattern, (match, key) => {
     const value = isFunction(parser) ? parser(key) : getByPath(parser, key)

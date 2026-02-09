@@ -24,9 +24,7 @@ const dfs = (
         key: file,
         text:
           titleMap[file] ||
-          file.charAt(0).toUpperCase() +
-            file.slice(1) +
-            (add ? `  ${add}` : ''),
+          file.charAt(0).toUpperCase() + file.slice(1) + (add ? `  ${add}` : ''),
         items: curContainer,
         collapsible: true,
         collapsed: false
