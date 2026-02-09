@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest run --coverage",
-    "build": "vite build && npx dts-bundle-generator -config dts-bundle-generator.config.json && node script/removeComment.js && npx eslint ./dist/parsnip-kit.d.ts --fix",
+    "build": "vite build && npx dts-bundle-generator -config dts-bundle-generator.config.json && node script/removeComment.js && npx oxlint ./dist/parsnip-kit.d.ts --fix",
     "lint:fix": "oxlint ./ --fix && prettier ./ --write",
     "doc": "pnpm run test && node script/generateMd.js",
     "doc:pure": "node script/generateMd.js",

@@ -15,8 +15,8 @@ export function debounce<T extends (...args: any[]) => any>(
   wait: number,
   options?: { maxWait?: number; immediate?: boolean }
 ): (...args: Parameters<T>) => void {
-  let timeout: number | undefined
-  let maxTimeout: number | undefined
+  let timeout: number | undefined | NodeJS.Timeout
+  let maxTimeout: number | undefined | NodeJS.Timeout
 
   const { immediate = false, maxWait } = options || {}
 

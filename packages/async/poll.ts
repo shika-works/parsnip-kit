@@ -36,7 +36,7 @@ export function poll<T>(
   } = options || {}
 
   function executeWithPoll(this: unknown, ...args: Parameters<typeof func>) {
-    let timer: number | undefined
+    let timer: number | undefined | NodeJS.Timeout
     let retries = 0
     let calls = 0
     let stopped = false
