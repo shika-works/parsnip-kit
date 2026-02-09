@@ -16,6 +16,10 @@ export default defineConfig({
       { text: 'Home', link: '/en' },
       { text: 'Doc', link: '/en/guide/intro' }
     ],
+    outline: {
+      level: [2, 4]
+    },
+    aside: true,
     sidebar: sidebar
   }
 })

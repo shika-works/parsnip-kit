@@ -23,21 +23,6 @@ img[alt='Static Badge'] {
   display: inline-block;
 }
 
-@media screen and (min-width: 1280px) {
-  .table-of-contents {
-    position: fixed;
-    right: 24px;
-    z-index: 114514;
-    height: 73vh;
-    overflow: auto;
-    font-size: 14px;
-  }
-}
-.table-of-contents ul {
-  list-style-type: none;
-  padding-left: 14px;
-}
-
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

@@ -30,6 +30,10 @@ export default defineConfig({
       { text: '首页', link: '/zh' },
       { text: '文档', link: '/zh/guide/intro' }
     ],
+    aside: true,
+    outline: {
+      level: [2, 4]
+    },
     sidebar: sidebar,
     search: {
       provider: 'local',
