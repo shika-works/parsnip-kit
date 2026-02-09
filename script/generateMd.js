@@ -81,25 +81,25 @@ function insertCoverage(output, fileData) {
 }
 
 function generateMD(lang, testReport) {
-  const examplePath = fileURLToPath(new URL('../packages', import.meta.url))
+  const codePath = fileURLToPath(new URL('../packages', import.meta.url))
   const docsPath = fileURLToPath(
     new URL('../wiki' + (!lang ? '' : '/' + lang), import.meta.url)
   )
   const templatePath = fileURLToPath(new URL('../docs/doc', import.meta.url))
-  const exampleFiles = fs.readdirSync(examplePath)
+  const docFiles = fs.readdirSync(templatePath)
 
   const dfs = (fileNames, prefixPath = []) => {
     fileNames.forEach((file) => {
       const [fileName, extname] = file.split('.')
 
-      const fullPath = `${examplePath}/${prefixPath.join('/')}${
+      const fullCodePath = `${codePath}/${prefixPath.join('/')}${
         prefixPath.length ? '/' : ''
-      }${file}`
+      }${fileName}.ts`
 
-      const fullTemplatePath = `${templatePath}/${prefixPath.join('/')}/${fileName}.md`
+      const fullTemplatePath = `${templatePath}/${prefixPath.join('/')}${prefixPath.length ? '/' : ''}/${file}`
 
-      if (fs.statSync(fullPath).isDirectory()) {
-        const nextFileNames = fs.readdirSync(fullPath)
+      if (fs.statSync(fullTemplatePath).isDirectory()) {
+        const nextFileNames = fs.readdirSync(fullTemplatePath)
         prefixPath.push(file)
         dfs(nextFileNames, prefixPath)
         prefixPath.pop()
@@ -108,44 +108,37 @@ function generateMD(lang, testReport) {
           return
         }
 
-        if (!fs.existsSync(fullTemplatePath)) {
-          return
-        }
-        const input = fs.readFileSync(fullPath, 'utf-8')
-        const template = fs.readFileSync(fullTemplatePath, 'utf-8')
-        let output = jsdocToMD({
-          input,
-          extname,
-          lang,
-          needContent: fullPath.includes('/common/'),
-          template,
-          path: fullTemplatePath.replace(/\\/g, '/')
-        })
+        let template = fs.readFileSync(fullTemplatePath, 'utf-8')
+        template =
+          jsdocToMD({
+            input: fs.existsSync(fullCodePath)
+              ? fs.readFileSync(fullCodePath, 'utf-8')
+              : '',
+            extname,
+            lang,
+            needContent: fullCodePath.includes('/common/'),
+            template,
+            path: fullTemplatePath.replace(/\\/g, '/')
+          }) || template
 
-        if (!output) {
-          return
-        }
-
-        const linuxPath = fullPath.replace(/\\/g, '/')
-        const windowsPath = fullPath.replace(/\//g, '\\')
+        const linuxPath = fullCodePath.replace(/\\/g, '/')
+        const windowsPath = fullCodePath.replace(/\//g, '\\')
         const fileData =
           testReport.coverageMap[linuxPath] || testReport.coverageMap[windowsPath]
 
         if (fileData && !linuxPath.includes('/packages/common/')) {
-          output = insertCoverage(output, fileData)
+          template = insertCoverage(template, fileData)
         }
-        const idx = output.indexOf('\n')
-        output = output.slice(0, idx) + `\n\n[[TOC]]` + output.slice(idx)
         const dirPath = `${docsPath}/${prefixPath.join('/')}`
         if (!fs.existsSync(dirPath)) {
           fs.mkdirSync(dirPath)
         }
-        fs.writeFileSync(`${dirPath}/${fileName}.md`, output)
+        fs.writeFileSync(`${dirPath}/${fileName}.md`, template)
       }
     })
   }
 
-  dfs(exampleFiles)
+  dfs(docFiles)
 }
 
 const data = JSON.parse(fs.readFileSync('coverage/coverage.json'))
