@@ -116,6 +116,7 @@ export { retry } from './async/retry'
 export type { RetryOptions } from './async/retry'
 export { poll } from './async/poll'
 export type { PollOptions, PollResult } from './async/poll'
+export { wait } from './async/wait'
 
 export { isEmail } from './validator/isEmail'
 
