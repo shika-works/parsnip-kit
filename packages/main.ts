@@ -70,6 +70,7 @@ export { linkToTree } from './array/linkToTree'
 export { chunk } from './array/chunk'
 export { numberSort } from './array/numberSort'
 export { orderSort } from './array/orderSort'
+export { isSubset } from './array/isSubset'
 
 export { range } from './number/range'
 export { percent } from './number/percent'
