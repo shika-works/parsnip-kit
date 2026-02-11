@@ -20,13 +20,13 @@ describe('wait function', () => {
 
   describe('Basic functionality', () => {
     it('should return a Promise', () => {
-      const result = wait(1000, 'test')
+      const result = wait(1000, () => 'test')
       expect(result).toBeInstanceOf(Promise)
     })
 
     it('should resolve the Promise after the specified delay', async () => {
       const callback = vi.fn()
-      const promise = wait(1000, 'test').then(callback)
+      const promise = wait(1000, () => 'test').then(callback)
 
       expect(callback).not.toHaveBeenCalled()
 
@@ -39,27 +39,27 @@ describe('wait function', () => {
 
     it('should work with generic types', async () => {
       // Test with string
-      const promise1 = wait(300, 'hello')
+      const promise1 = wait(300, () => 'hello')
       vi.advanceTimersByTime(300)
       const result1 = await promise1
       expectTypeOf(result1).toEqualTypeOf<string>()
       expect(result1).toBe('hello')
 
-      const promise2 = wait(300, 42)
+      const promise2 = wait(300, () => 42)
       vi.advanceTimersByTime(300)
       const result2 = await promise2
       expect(result2).toBe(42)
       expectTypeOf(result2).toEqualTypeOf<number>()
 
       const obj = { key: 'value' }
-      const promise3 = wait(300, obj)
+      const promise3 = wait(300, () => obj)
       vi.advanceTimersByTime(300)
       const result3 = await promise3
       expect(result3).toBe(obj)
       expectTypeOf(result3).toEqualTypeOf<{ key: string }>()
 
       const arr = [1, 2, 3]
-      const promise4 = wait(300, arr)
+      const promise4 = wait(300, () => arr)
       vi.advanceTimersByTime(300)
       const result4 = await promise4
       expect(result4).toBe(arr)
@@ -69,9 +69,9 @@ describe('wait function', () => {
       vi.advanceTimersByTime(300)
       const result5 = await promise5
       expect(result5).toBe(undefined)
-      expectTypeOf(result5).toEqualTypeOf<undefined>()
+      expectTypeOf(result5).toEqualTypeOf<any>()
 
-      const promise6 = wait(300, null)
+      const promise6 = wait(300, () => null)
       vi.advanceTimersByTime(300)
       const result6 = await promise6
       expect(result6).toBe(null)
@@ -81,7 +81,7 @@ describe('wait function', () => {
 
   describe('Edge cases', () => {
     it('should handle zero delay', async () => {
-      const promise = wait(0, 'immediate')
+      const promise = wait(0, () => 'immediate')
 
       // Execute microtasks immediately
       await Promise.resolve()
@@ -93,7 +93,7 @@ describe('wait function', () => {
     })
 
     it('should handle negative delay (treated as zero)', async () => {
-      const promise = wait(-100, 'negative delay')
+      const promise = wait(-100, () => 'negative delay')
 
       // Execute microtasks immediately
       await Promise.resolve()
@@ -110,7 +110,7 @@ describe('wait function', () => {
       const delays = [100, 200, 300]
       const results: string[] = []
       const promises = delays.map((delay, index) =>
-        wait(delay, `result-${index}`).then((result) => {
+        wait(delay, () => `result-${index}`).then((result) => {
           results.push(result)
           return result
         })
@@ -128,9 +128,9 @@ describe('wait function', () => {
     it('should resolve in correct order', async () => {
       const resolveOrder: number[] = []
 
-      wait(300, 3).then(() => resolveOrder.push(3))
-      wait(100, 1).then(() => resolveOrder.push(1))
-      wait(200, 2).then(() => resolveOrder.push(2))
+      wait(300, () => 3).then(() => resolveOrder.push(3))
+      wait(100, () => 1).then(() => resolveOrder.push(1))
+      wait(200, () => 2).then(() => resolveOrder.push(2))
 
       vi.advanceTimersByTime(300)
       await Promise.resolve() // Execute all microtasks
