@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-const newItems = ['shuffle', 'shuffleInPlace']
+const newItems = ['shuffle', 'shuffleInPlace', 'isSubset', 'wait']
 
 const dfs = (
   files: any,
