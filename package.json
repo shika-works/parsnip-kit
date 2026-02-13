@@ -12,6 +12,7 @@
     "docs:build": "pnpm run doc && vitepress build wiki",
     "docs:preview": "vitepress preview wiki",
     "release": "pnpm run test && pnpm run lint:fix && pnpm run build && pnpm publish",
+    "release:dry-run": "pnpm run test && pnpm run lint:fix && pnpm run build && pnpm publish --dry-run",
     "init": "node script/init.js",
     "prepare": "husky install",
     "lint:lint-staged": "lint-staged",
