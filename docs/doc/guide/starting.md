@@ -1,5 +1,15 @@
+[[[slice zh
+# 安装
+选择一个你喜欢的包管理器。
+]]]
+[[[slice ja
+# インストール
+お好みのパッケージマネージャーをお選びください。
+]]]
+[[[slice
 # Installation
 Choose your preferred package manager.
+]]]
 ::: code-group
 ```sh [npm]
 npm install parsnip-kit
@@ -17,23 +27,48 @@ pnpm install parsnip-kit
 bun install parsnip-kit
 ```
 :::
-# Compatibility
+[[[slice zh
+# 兼容性
 
-Parsnip Kit can run in the following environments.
+Parsnip Kit 支持在以下环境运行：
+]]]
+
+[[[slice ja
+Parsnip Kit は、以下の環境で実行をサポートしています：
+]]]
+
+[[[slice
+If you need to support older browsers, manually add [Babel](https://babeljs.io/) and the corresponding Polyfill.
+]]]
 
 |<img src="/js_logo.png" width="32px" height="32px"/>ECMAScript|<img src="/edge_logo.svg" width="32px" height="32px"/>Edge|<img src="/firefox_logo.svg" width="32px" height="32px"/>Firefox|<img src="/chrome_logo.svg" width="32px" height="32px"/>Chrome|<img src="/safari_logo.svg" width="32px" height="32px"/>Safari|
 |-|-|-|-|-|
 |≥2020|≥88|≥78|≥87|≥14|
 
+[[[slice zh
+如果您需要支持旧版本的浏览器，请自行添加 [Babel](https://babeljs.io/) 和相应的 Polyfill。
+]]]
+[[[slice ja 
+古いバージョンのブラウザをサポートする必要がある場合は、[Babel](https://babeljs.io/) と対応する Polyfill を手動で追加してください。
+]]]
+[[[slice
 If you need to support older browsers, manually add [Babel](https://babeljs.io/) and the corresponding Polyfill.
-
+]]]
 # LLMs
 
 [llms.txt](/llms.txt)
 
 [llms-full.txt](/llms-full.txt)
 
+[[[slice zh
+# 使用示例
+]]]
+[[[slice ja
+# 使用例
+]]]
+[[[slice
 # Example Usage
+]]]
 ```typescript
 import {
   sum,

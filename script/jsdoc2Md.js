@@ -7,6 +7,7 @@
 import fs from 'fs'
 import { parse } from 'comment-parser'
 import esprima from 'esprima'
+import strict from 'assert/strict'
 
 function formatType(types) {
   if (types.includes('|')) {
@@ -18,14 +19,20 @@ function formatType(types) {
 function transitParagraph(templateContent, regExp, lang, generateContent) {
   let templateFile = templateContent
   const matchDesc = [...templateFile.matchAll(regExp)]
+
   if (matchDesc.length) {
     let langItemArr, defaultItemArr
     matchDesc.forEach((matchItem) => {
-      const matchContentArr = matchItem[1].split(/\n|\r\n/).map((e) => e.trim())
+      const matchContentArr = (matchItem[2] || '')
+        .split(/\n|\r\n/)
+        .map((e) => e.trim())
       matchContentArr.index = matchItem.index
-      matchContentArr.content = matchItem[1]
-      const langToken = matchContentArr.shift()
+
+      matchContentArr.content = matchItem[2] || ''
+
+      const langToken = (matchItem[1] || '').trim()
       matchContentArr.type = langToken
+
       if (lang && langToken === lang) {
         langItemArr = matchContentArr
       } else if (langToken === '') {
@@ -33,11 +40,37 @@ function transitParagraph(templateContent, regExp, lang, generateContent) {
       }
     })
     const validItemArr = langItemArr || defaultItemArr
+
     matchDesc.forEach((matchItem) => {
       templateFile = templateFile.replace(
         matchItem[0],
-        matchItem.index === validItemArr.index
-          ? generateContent(validItemArr)
+        matchItem.index === validItemArr.index ? generateContent(validItemArr) : ''
+      )
+    })
+  }
+  return templateFile
+}
+
+function transitParagraphByLang(templateContent, regExp, lang, generateContent) {
+  let templateFile = templateContent
+  const matchDesc = [...templateFile.matchAll(regExp)]
+
+  if (matchDesc.length) {
+    matchDesc.forEach((matchItem) => {
+      const matchContentArr = (matchItem[2] || '')
+        .split(/\n|\r\n/)
+        .map((e) => e.trim())
+      matchContentArr.index = matchItem.index
+
+      matchContentArr.content = matchItem[2] || ''
+
+      const langToken = (matchItem[1] || '').trim()
+      matchContentArr.type = langToken
+
+      templateFile = templateFile.replace(
+        matchItem[0],
+        langToken === lang || (lang === 'en' && !langToken)
+          ? generateContent(matchContentArr)
           : ''
       )
     })
@@ -77,9 +110,8 @@ function generateMD(func) {
     lang,
     path
   } = func
-
   const descReg = new RegExp(
-    `\\[\\[\\[desc ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[desc[\\s]+${functionName}(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*(\\n+[\\s\\S]+?){0,1}\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(
@@ -90,7 +122,7 @@ function generateMD(func) {
   )
 
   const versionReg = new RegExp(
-    `\\[\\[\\[version ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[version[\\s]+${functionName}(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*(\\n+[\\s\\S]+?){0,1}\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(templateFile, versionReg, lang, () =>
@@ -99,20 +131,15 @@ function generateMD(func) {
 
   const demoReg = new RegExp(`\\[\\[\\[demo([\\d\\D]*?)\\]\\]\\]`, 'g')
   templateFile = transitDemo(templateFile, demoReg, (validItemArr) => {
-    const demoContent = fs.readFileSync(
-      path.replace('/doc/', '/demo/'),
-      'utf-8'
-    )
+    const demoContent = fs.readFileSync(path.replace('/doc/', '/demo/'), 'utf-8')
     const match = demoContent.match(
-      new RegExp(
-        `\\[\\[\\[demo${validItemArr.type ? ` ${validItemArr.type}` : ''}([\\d\\D]*?)\\]\\]\\]`
-      )
+      new RegExp(`\\[\\[\\[demo([\\d\\D]*?)\\]\\]\\]`)
     )
     return match?.[1] || ''
   })
 
   const templateReg = new RegExp(
-    `\\[\\[\\[template ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[template[\\s]+${functionName}(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*(\\n+[\\s\\S]+?){0,1}\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(
@@ -149,56 +176,50 @@ function generateMD(func) {
   )
 
   const paramsReg = new RegExp(
-    `\\[\\[\\[params ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[params[\\s]+${functionName}(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*(\\n+[\\s\\S]+?){0,1}\\]\\]\\]`,
     'g'
   )
-  templateFile = transitParagraph(
-    templateFile,
-    paramsReg,
-    lang,
-    (validItemArr) => {
-      const dict = {}
-      if (validItemArr.content) {
-        const rows = validItemArr.content.trim().split(/\n|\r\n/)
-        rows.forEach((row) => {
-          const idx = row.indexOf(':')
-          if (idx === -1) {
-            return
-          }
-          const key = row.slice(0, idx)
-          const value = row.slice(idx + 1)
-          dict[key.trim()] = value.trim()
-        })
-      }
-      const text = args?.length
-        ? `\n\n| Arg | Type | Optional | Default | Description |\n| --- | --- | --- | --- | --- |\n${args
-            .map(
-              (item) =>
-                `| \`${item.name}\` | ${
-                  '`' + formatType(item.type).join(' \\| ') + '`'
-                } | \`${item.optional}\` | \`${item.default}\` | ${
-                  dict[item.name] || item.desc
-                } |`
-            )
-            .join('\n')}\n\n`
-        : ''
-
-      return text
+  templateFile = transitParagraph(templateFile, paramsReg, lang, (validItemArr) => {
+    const dict = {}
+    if (validItemArr.content) {
+      const rows = validItemArr.content.trim().split(/\n|\r\n/)
+      rows.forEach((row) => {
+        const idx = row.indexOf(':')
+        if (idx === -1) {
+          return
+        }
+        const key = row.slice(0, idx)
+        const value = row.slice(idx + 1)
+        dict[key.trim()] = value.trim()
+      })
     }
-  )
+
+    const text = args?.length
+      ? `\n\n| Arg | Type | Optional | Default | Description |\n| --- | --- | --- | --- | --- |\n${args
+          .map(
+            (item) =>
+              `| \`${item.name}\` | ${
+                '`' + formatType(item.type).join(' \\| ') + '`'
+              } | \`${item.optional}\` | \`${item.default}\` | ${
+                dict[item.name] || item.desc
+              } |`
+          )
+          .join('\n')}\n\n`
+      : ''
+
+    return text
+  })
 
   const returnsReg = new RegExp(
-    `\\[\\[\\[returns ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[returns[\\s]+${functionName}(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*(\\n+[\\s\\S]+?){0,1}\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(templateFile, returnsReg, lang, () => {
-    return returnType
-      ? `\n\n| Type |\n| ---  |\n| \`${returnType}\`  |\n\n`
-      : ''
+    return returnType ? `\n\n| Type |\n| ---  |\n| \`${returnType}\`  |\n\n` : ''
   })
 
   const sourceReg = new RegExp(
-    `\\[\\[\\[source ${functionName}[ \\n]{1}([\\d\\D]*?)\\]\\]\\]`,
+    `\\[\\[\\[source[\\s]+${functionName}(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*\\]\\]\\]`,
     'g'
   )
   templateFile = transitParagraph(templateFile, sourceReg, lang, () => {
@@ -312,10 +333,23 @@ function parseFile(file) {
   })
   return result.filter(Boolean)
 }
+
+const sliceReg = new RegExp(
+  `\\[\\[\\[slice(?:[\\s]+([a-zA-Z-]*?)){0,1}[\\s]*(\\n+[\\s\\S]+?){0,1}\\]\\]\\]`,
+  'g'
+)
+
+const progressSlice = (template, lang) => {
+  return transitParagraphByLang(template, sliceReg, lang, (validItemArr) => {
+    return validItemArr.join('\n').trim()
+  })
+}
+
 function jsdocToMD(options) {
   const { input, lang, template: templateFile, path } = options
   const parsedFiles = parseFile(input)
-  const md = parsedFiles.reduce((pre, file) => {
+  let md = templateFile
+  md = parsedFiles.reduce((pre, file) => {
     const { comment, content } = file
     const formatJsdoc = getFormatJsdoc(comment)
     const { functionName } = getFunctionName(content)
@@ -332,6 +366,8 @@ function jsdocToMD(options) {
     }).trim()
     return ans
   }, templateFile)
+  md = progressSlice(md, lang)
+
   return md
 }
 export { jsdocToMD }

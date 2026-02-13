@@ -200,22 +200,14 @@ describe('numberSort', () => {
   })
 
   test('uses getter as callback function', () => {
-    const sortedByAgeAsc = numberSort(
-      [...people],
-      'asc',
-      (person) => person.age
-    )
+    const sortedByAgeAsc = numberSort([...people], 'asc', (person) => person.age)
     expect(sortedByAgeAsc).toEqual([
       { name: 'Alice', age: 25 },
       { name: 'John', age: 30 },
       { name: 'Bob', age: 35 }
     ])
 
-    const sortedByAgeDesc = numberSort(
-      [...people],
-      'desc',
-      (person) => person.age
-    )
+    const sortedByAgeDesc = numberSort([...people], 'desc', (person) => person.age)
     expect(sortedByAgeDesc).toEqual([
       { name: 'Bob', age: 35 },
       { name: 'John', age: 30 },

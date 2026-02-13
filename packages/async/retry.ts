@@ -62,10 +62,7 @@ export function retry<T>(
         } else {
           onFailure(error, attempts)
           return {
-            reason: [
-              error,
-              createError('Retry canceled by options.shouldRetry')
-            ],
+            reason: [error, createError('Retry canceled by options.shouldRetry')],
             status: 'rejected' as const
           }
         }

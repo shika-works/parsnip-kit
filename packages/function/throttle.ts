@@ -17,7 +17,7 @@ export function throttle<T extends (...args: any[]) => any>(
   options?: { leading?: boolean; trailing?: boolean }
 ) {
   let previous = 0
-  let timeout: number | undefined
+  let timeout: number | undefined | NodeJS.Timeout
   const { leading = false, trailing = true } = options || {}
 
   const throttled = function (
