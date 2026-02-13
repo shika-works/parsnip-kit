@@ -43,7 +43,9 @@
     "dist",
     "packages",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "!packages/**/*.test.ts",
+    "!packages/**/*.test.js"
   ],
   "main": "./dist/parsnip-kit.js",
   "exports": {
