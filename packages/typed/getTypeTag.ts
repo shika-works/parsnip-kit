@@ -4,5 +4,4 @@
  * @returns {string}
  * @version 0.0.1
  */
-export const getTypeTag = (arg) =>
-  Object.prototype.toString.apply(arg).slice(8, -1)
+export const getTypeTag = (arg) => Object.prototype.toString.apply(arg).slice(8, -1)

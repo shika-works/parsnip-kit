@@ -37,15 +37,10 @@ describe('statistic', () => {
     expect(median([1, 2, 3, 4])).eq(2.5)
 
     expect(
-      median(
-        [{ value: 10 }, { value: 20 }, { value: 10 }],
-        (item) => item.value
-      )
+      median([{ value: 10 }, { value: 20 }, { value: 10 }], (item) => item.value)
     ).eq(10)
 
-    expect(median([{ score: 100 }, { score: 85 }, { score: 95 }], 'score')).eq(
-      95
-    )
+    expect(median([{ score: 100 }, { score: 85 }, { score: 95 }], 'score')).eq(95)
   })
   test('count', () => {
     const res4Number = count([1, 2, 2, 3, 3, 3])
@@ -129,10 +124,7 @@ describe('statistic', () => {
       )
     ).toEqual({ value: 20 })
     expect(
-      maxItem(
-        [{ value: 10 }, { value: 20 }, { value: 20, key: 'count' }],
-        'value'
-      )
+      maxItem([{ value: 10 }, { value: 20 }, { value: 20, key: 'count' }], 'value')
     ).toEqual({ value: 20 })
   })
   test('minItem', () => {
@@ -144,10 +136,7 @@ describe('statistic', () => {
       )
     ).toEqual({ value: 10 })
     expect(
-      minItem(
-        [{ value: 10 }, { value: 20 }, { value: 10, key: 'count' }],
-        'value'
-      )
+      minItem([{ value: 10 }, { value: 20 }, { value: 10, key: 'count' }], 'value')
     ).toEqual({ value: 10 })
   })
 })

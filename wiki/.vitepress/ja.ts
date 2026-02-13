@@ -30,6 +30,10 @@ export default defineConfig({
       { text: 'ホーム', link: '/ja' },
       { text: 'ドキュメント', link: '/ja/guide/intro' }
     ],
+    aside: true,
+    outline: {
+      level: [2, 4]
+    },
     sidebar: sidebar,
     search: {
       provider: 'local',

@@ -32,7 +32,10 @@ export type PseudoArray = object & { length: number }
  * Non-function object.
  * @version 0.0.1
  */
-export type ObjectLike = object & { call?: never; [x: PropertyKey]: any }
+export type ObjectLike = object & {
+  call?: never
+  [x: PropertyKey]: any
+}
 /**
  * Extract a union type from a tuple.
  * @version 0.0.1
@@ -55,10 +58,7 @@ export type KeyOrIndex<T extends string> = T extends
  * Returns the last element of tuple type.
  * @version 0.0.1
  */
-export type Tail<T extends readonly any[]> = T extends readonly [
-  ...any[],
-  infer L
-]
+export type Tail<T extends readonly any[]> = T extends readonly [...any[], infer L]
   ? L
   : never
 
@@ -66,10 +66,7 @@ export type Tail<T extends readonly any[]> = T extends readonly [
  * Returns the first element of tuple type.
  * @version 0.0.1
  */
-export type Head<T extends readonly any[]> = T extends readonly [
-  infer L,
-  ...any[]
-]
+export type Head<T extends readonly any[]> = T extends readonly [infer L, ...any[]]
   ? L
   : never
 
@@ -77,10 +74,9 @@ export type Head<T extends readonly any[]> = T extends readonly [
  * Retrieve the first or last element of tuple `T`, determined by type `D`.
  * @version 0.0.1
  */
-export type Edge<
-  T extends readonly any[],
-  D = 'left' | 'right'
-> = D extends 'left' ? Head<T> : Tail<T>
+export type Edge<T extends readonly any[], D = 'left' | 'right'> = D extends 'left'
+  ? Head<T>
+  : Tail<T>
 
 /**
  * Similar to `Edge`, but the effects of `'left'` and `'right'` for D are reversed.
@@ -129,11 +125,7 @@ export type LiteralStringWithFallback<T extends string, R extends string> = T &
  * Generates plain objects or arrays based on input string/numeric index `T`, pointing to type `V`, with optionality controlled by type `O`.
  * @version 0.0.2
  */
-export type MappedTypeByKeyOrIndex<
-  T extends string,
-  V,
-  O extends boolean = false
-> =
+export type MappedTypeByKeyOrIndex<T extends string, V, O extends boolean = false> =
   KeyOrIndex<T> extends string
     ? O extends false
       ? { [P in T]: V }
@@ -155,10 +147,7 @@ export type DeepMappedTypeByKeyOrIndex<
 > = T extends `[${infer Key extends number}][${infer Rest}`
   ? MappedTypeByKeyOrIndex<`${Key}`, DeepMappedTypeByKeyOrIndex<`[${Rest}`, V>>
   : T extends `${infer Key}[${infer Rest}`
-    ? MappedTypeByKeyOrIndex<
-        `${Key}`,
-        DeepMappedTypeByKeyOrIndex<`[${Rest}`, V>
-      >
+    ? MappedTypeByKeyOrIndex<`${Key}`, DeepMappedTypeByKeyOrIndex<`[${Rest}`, V>>
     : T extends `[${infer Key extends number}].${infer Rest}`
       ? MappedTypeByKeyOrIndex<`${Key}`, DeepMappedTypeByKeyOrIndex<Rest, V>>
       : T extends `${infer Key}.${infer Rest}`
@@ -242,20 +231,14 @@ export type FieldPathComponent<
  * It recursively processes each element in the array and continues to flatten based on the type of the element (object or array).
  * @version 0.0.4
  */
-export type FlattenArrayObject<
-  T extends Array<any>,
-  Prefix extends string = ''
-> = {
+export type FlattenArrayObject<T extends Array<any>, Prefix extends string = ''> = {
   [K in number | ArrayIndexes<T>]: IsAny<T[K]> extends true
     ? { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
     : T[K] extends never
       ? never
       : T[K] extends object
         ? T[K] extends Array<any>
-          ? FlattenArrayObject<
-              T[K],
-              `${Prefix}${FieldPathComponent<K, 'array'>}`
-            >
+          ? FlattenArrayObject<T[K], `${Prefix}${FieldPathComponent<K, 'array'>}`>
           : FlattenObject<T[K], `${Prefix}${FieldPathComponent<K, 'object'>}`>
         : { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
 }[ArrayIndexes<T> | number]
@@ -271,10 +254,7 @@ export type FlattenObject<T, Prefix extends string = ''> = {
       ? never
       : T[K] extends object
         ? T[K] extends Array<any>
-          ? FlattenArrayObject<
-              T[K],
-              `${Prefix}${FieldPathComponent<K, 'array'>}`
-            >
+          ? FlattenArrayObject<T[K], `${Prefix}${FieldPathComponent<K, 'array'>}`>
           : FlattenObject<T[K], `${Prefix}${FieldPathComponent<K, 'object'>}`>
         : { [P in `${Prefix}${FieldPathComponent<K>}`]: T[K] }
 }[keyof T & string]

@@ -44,10 +44,7 @@ describe('poll function', () => {
     mockAsyncFunction.mockRejectedValueOnce(new Error('mock error'))
     const pollResult = poll(mockAsyncFunction, 10, mockOptions)()
     await pollResult.stop()
-    expect(mockOptions.onFailure).toHaveBeenCalledWith(
-      new Error('mock error'),
-      1
-    )
+    expect(mockOptions.onFailure).toHaveBeenCalledWith(new Error('mock error'), 1)
   })
 
   test('should retry until maxRetries is reached', async () => {
@@ -59,9 +56,7 @@ describe('poll function', () => {
     const pollResult = poll(mockAsyncFunction, 10, mockOptions)()
     await new Promise((resolve) => setTimeout(resolve, 4000))
     expect(mockAsyncFunction).toHaveBeenCalledTimes(mockOptions.maxRetries + 1)
-    expect(mockOptions.onFailure).toHaveBeenCalledTimes(
-      mockOptions.maxRetries + 1
-    )
+    expect(mockOptions.onFailure).toHaveBeenCalledTimes(mockOptions.maxRetries + 1)
     pollResult.stop()
   })
 

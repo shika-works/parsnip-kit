@@ -22,7 +22,7 @@ describe('array', () => {
       rightArray0,
       (item) => item.id,
       (item) => item.id,
-      (left, right) => ({ ...left, ...(right || {}) })
+      (left, right) => ({ ...left, ...right })
     )
     expect(JSON.stringify(result0)).eq(
       '[{"id":1,"name":"Alice","age":25},{"id":2,"name":"Bob"},{"id":3,"name":"Charlie","age":30}]'
@@ -157,6 +157,11 @@ describe('array', () => {
         (pair) => pair.name,
         (pair) => pair.type
       )
-    ).toEqual({ Alex: 'vip', Bob: 'viewer', Carter: 'user', Daniel: 'user' })
+    ).toEqual({
+      Alex: 'vip',
+      Bob: 'viewer',
+      Carter: 'user',
+      Daniel: 'user'
+    })
   })
 })

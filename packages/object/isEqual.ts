@@ -114,10 +114,7 @@ function isSetEqual(arg1: Set<any>, arg2: Set<any>) {
   return true
 }
 
-function isArrayAndObjectEqual(
-  arg1: any[] | ObjectLike,
-  arg2: any[] | ObjectLike
-) {
+function isArrayAndObjectEqual(arg1: any[] | ObjectLike, arg2: any[] | ObjectLike) {
   const keys1 = Object.keys(arg1)
   const keys2 = Object.keys(arg2)
   if (keys1.length !== keys2.length) {

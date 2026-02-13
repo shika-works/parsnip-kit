@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-const newItems = ['isEmpty', 'isEmail', 'clamp', 'mapFields']
+const newItems = ['shuffle', 'shuffleInPlace', 'isSubset', 'wait']
 
 const dfs = (
   files: any,
@@ -24,9 +24,7 @@ const dfs = (
         key: file,
         text:
           titleMap[file] ||
-          file.charAt(0).toUpperCase() +
-            file.slice(1) +
-            (add ? `  ${add}` : ''),
+          file.charAt(0).toUpperCase() + file.slice(1) + (add ? `  ${add}` : ''),
         items: curContainer,
         collapsible: true,
         collapsed: false

@@ -29,6 +29,5 @@ wiki/.vitepress/dist
 wiki/**/*.md
 
 !wiki/**/index.md
-!wiki/**/guide/*.md
 
 README.temp.md

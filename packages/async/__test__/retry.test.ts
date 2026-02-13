@@ -45,10 +45,7 @@ describe('retry', () => {
   it('should retry and return fulfilled result when task eventually succeeds', async () => {
     const error1 = new Error('First error')
     const value = 100
-    const mockTask = vi
-      .fn()
-      .mockRejectedValueOnce(error1)
-      .mockResolvedValue(value)
+    const mockTask = vi.fn().mockRejectedValueOnce(error1).mockResolvedValue(value)
 
     // @ts-ignored
     retry(mockTask, 3, {
