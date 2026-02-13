@@ -44,8 +44,7 @@ export function convertDataUnit(
   const factor = prefix === 'decimal' ? 1000 : 1024
   const bitToOther = fromIndex === 0 && toIndex > 0
   const otherToBit = toIndex === 0 && fromIndex > 0
-  const exponent =
-    fromIndex - toIndex + (bitToOther ? 1 : 0) - (otherToBit ? 1 : 0)
+  const exponent = fromIndex - toIndex + (bitToOther ? 1 : 0) - (otherToBit ? 1 : 0)
   return (
     ((value * Math.pow(factor, exponent)) / (bitToOther ? 8 : 1)) *
     (otherToBit ? 8 : 1)

@@ -59,9 +59,7 @@ describe('asyncForEach', () => {
       return Promise.resolve()
     }
 
-    await expect(asyncForEach(array, iterator)).rejects.toThrow(
-      'Error on item 3'
-    )
+    await expect(asyncForEach(array, iterator)).rejects.toThrow('Error on item 3')
   })
 
   test('should handle errors in non-concurrent mode', async () => {
@@ -134,9 +132,9 @@ describe('asyncForEachFields', () => {
       return Promise.resolve(void 0)
     }
 
-    await expect(
-      asyncForEachFields(obj, iterator, 'concurrent')
-    ).rejects.toThrow('Error on key c')
+    await expect(asyncForEachFields(obj, iterator, 'concurrent')).rejects.toThrow(
+      'Error on key c'
+    )
   })
 
   test('should handle errors in sequential mode', async () => {
@@ -148,9 +146,9 @@ describe('asyncForEachFields', () => {
       return Promise.resolve(void 0)
     }
 
-    await expect(
-      asyncForEachFields(obj, iterator, 'sequential')
-    ).rejects.toThrow('Error on key c')
+    await expect(asyncForEachFields(obj, iterator, 'sequential')).rejects.toThrow(
+      'Error on key c'
+    )
   })
 
   test('should wait for all promises to complete in concurrent mode', async () => {

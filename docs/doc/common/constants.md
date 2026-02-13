@@ -1,3 +1,7 @@
+---
+outline: 1
+---
+
 # stringComparatorAsc
 [[[desc stringComparatorAsc
 

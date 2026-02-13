@@ -7,10 +7,7 @@
  * @returns {(...args: Parameters<T>) => void}
  * @version 0.0.1
  */
-export function delay<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-) {
+export function delay<T extends (...args: any[]) => any>(func: T, wait: number) {
   return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
     setTimeout(() => {
       func.apply(this, args)

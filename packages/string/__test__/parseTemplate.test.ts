@@ -23,7 +23,10 @@ describe('parseTemplate', () => {
   it('should support custom delimiters', () => {
     const template = 'Hello, <name>! Your balance is <balance>.'
     const data = { name: 'Alice', balance: '$100' }
-    const result = parseTemplate(template, data, { start: '<', end: '>' })
+    const result = parseTemplate(template, data, {
+      start: '<',
+      end: '>'
+    })
     expect(result).toBe('Hello, Alice! Your balance is $100.')
   })
 

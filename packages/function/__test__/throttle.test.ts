@@ -38,8 +38,12 @@ describe('throttle', () => {
   })
   describe('leading option', () => {
     it('should trigger immediately on first call when leading is true', () => {
-      const throttledFunc = throttle(defaultFunc, 200, { leading: true })
+      const throttledFunc = throttle(defaultFunc, 200, {
+        leading: true
+      })
 
+      throttledFunc()
+      throttledFunc()
       throttledFunc()
       expect(defaultFunc).toHaveBeenCalledTimes(1)
       vi.advanceTimersByTime(200)
@@ -49,7 +53,9 @@ describe('throttle', () => {
     })
 
     it('should not trigger on first call when leading is false', () => {
-      const throttledFunc = throttle(defaultFunc, 200, { leading: false })
+      const throttledFunc = throttle(defaultFunc, 200, {
+        leading: false
+      })
 
       throttledFunc()
 
@@ -62,7 +68,9 @@ describe('throttle', () => {
   })
   describe('trailing option', () => {
     it('should trigger at the end of the interval when trailing is true', () => {
-      const throttledFunc = throttle(defaultFunc, 200, { trailing: true })
+      const throttledFunc = throttle(defaultFunc, 200, {
+        trailing: true
+      })
 
       throttledFunc()
       vi.advanceTimersByTime(150)
@@ -75,7 +83,9 @@ describe('throttle', () => {
     })
 
     it('should not trigger at the end when trailing is false', () => {
-      const throttledFunc = throttle(defaultFunc, 200, { trailing: false })
+      const throttledFunc = throttle(defaultFunc, 200, {
+        trailing: false
+      })
 
       throttledFunc()
       vi.advanceTimersByTime(200)
