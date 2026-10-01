@@ -1,6 +1,27 @@
 import { describe, it, expect } from 'vitest'
 import { concurrent } from '../concurrent'
 
+const trackConcurrency = async (count: number, limit: number, duration = 10) => {
+  let active = 0
+  let maxActive = 0
+  const order: number[] = []
+  const functions = Array.from(
+    { length: count },
+    (_, i) => () =>
+      new Promise<number>((resolve) => {
+        active++
+        maxActive = Math.max(maxActive, active)
+        order.push(i)
+        setTimeout(() => {
+          active--
+          resolve(i)
+        }, duration)
+      })
+  )
+  const result = await concurrent(functions, limit)
+  return { result, maxActive, order }
+}
+
 describe('concurrent', () => {
   it('should execute functions with concurrency limit', async () => {
     const functions = Array.from(
@@ -93,5 +114,52 @@ describe('concurrent', () => {
       { status: 'fulfilled', value: 'B' },
       { status: 'fulfilled', value: 'C' }
     ])
+  })
+
+  it('should never exceed the concurrency limit', async () => {
+    for (const limit of [1, 2, 3, 5]) {
+      const { maxActive } = await trackConcurrency(20, limit)
+      expect(maxActive).toBeLessThanOrEqual(limit)
+      expect(maxActive).toBe(limit)
+    }
+  })
+
+  it('should keep results in the input order regardless of completion order', async () => {
+    const functions = [30, 10, 20].map(
+      (delay, i) => () =>
+        new Promise<number>((resolve) => setTimeout(() => resolve(i), delay))
+    )
+
+    const result = await concurrent(functions, 3)
+
+    expect(result).toEqual([
+      { status: 'fulfilled', value: 0 },
+      { status: 'fulfilled', value: 1 },
+      { status: 'fulfilled', value: 2 }
+    ])
+  })
+
+  it('should resolve with settled results when every function rejects', async () => {
+    const functions = Array.from(
+      { length: 5 },
+      (_, i) => () => Promise.reject(new Error(`Error ${i}`))
+    )
+
+    const result = await concurrent(functions, 2)
+
+    expect(result).toHaveLength(5)
+    result.forEach((item, i) => {
+      expect(item.status).eq('rejected')
+      if (item.status === 'rejected') {
+        expect(item.reason).instanceOf(Error)
+        expect(item.reason.message).eq(`Error ${i}`)
+      }
+    })
+  })
+
+  it('should fall back to sequential execution when limit is less than 1', async () => {
+    const { maxActive, order } = await trackConcurrency(5, 0)
+    expect(maxActive).toBe(1)
+    expect(order).toEqual([0, 1, 2, 3, 4])
   })
 })
