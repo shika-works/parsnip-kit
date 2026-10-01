@@ -9,6 +9,19 @@
 ]]]
 
 [[[slice
+## v0.1.1
+Fix the `concurrent` function so that the number of functions running at the same time never exceeds `limit`, and make it always resolve with the settled results instead of rejecting when a function fails.
+]]]
+[[[slice zh
+## v0.1.1
+修复 `concurrent` 函数，同时运行的函数数量不再超过 `limit`，并且当函数失败时始终以 settled 结果 resolve，而不是抛出异常。
+]]]
+[[[slice ja
+## v0.1.1
+`concurrent` 関数を修正し、同時に実行される関数の数が `limit` を超えないようにするとともに、関数が失敗した場合でも reject せずに settled な結果で resolve するようにしました。
+]]]
+
+[[[slice
 ## v0.1.0
 Add functions isSubset, wait, shuffle and shuffleInPlace.
 ]]]
