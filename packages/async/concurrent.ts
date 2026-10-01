@@ -3,28 +3,27 @@
  *
  * @template {} T  The `value` type returned by a function that returns a `Promise`
  * @param {(() => Promise<T>)[]} functions  Array of functions that return `Promise`
- * @param {number} limit Array of functions that return `Promise`
+ * @param {number} limit  Maximum number of functions executed concurrently
  * @returns {Promise<PromiseSettledResult<Awaited<T>>[]>}
  * @version 0.0.1
  */
 export async function concurrent<T>(
   functions: (() => Promise<T>)[],
   limit: number
-) {
-  const tasks: Promise<T>[] = []
-  const executing: Promise<unknown>[] = []
-  for (const func of functions) {
-    const task = Promise.resolve().then(() => func())
-    tasks.push(task as any)
-    if (limit <= tasks.length) {
-      const executingTask = task.finally(() => {
-        executing.splice(executing.indexOf(executingTask), 1)
-      })
-      executing.push(executingTask)
-      if (executing.length >= limit) {
-        await Promise.race(executing)
+): Promise<PromiseSettledResult<Awaited<T>>[]> {
+  const results: PromiseSettledResult<Awaited<T>>[] = []
+  let cursor = 0
+  const run = async () => {
+    while (cursor < functions.length) {
+      const index = cursor++
+      try {
+        results[index] = { status: 'fulfilled', value: await functions[index]() }
+      } catch (reason) {
+        results[index] = { status: 'rejected', reason }
       }
     }
   }
-  return Promise.allSettled(tasks)
+  const size = Math.min(Math.max(Math.floor(limit) || 1, 1), functions.length)
+  await Promise.all(Array.from({ length: size }, run))
+  return results
 }
