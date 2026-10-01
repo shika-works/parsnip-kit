@@ -31,3 +31,5 @@ wiki/**/*.md
 !wiki/**/index.md
 
 README.temp.md
+
+.npmrc
